@@ -1,10 +1,8 @@
-import Page from './iu/page/cmp-page';
+import './ui/index.scss';
+import index from './ui/page';
 
 const init = () => {
-  const page = new Page();
-  console.log('1');
+  index();
 };
 
 window.addEventListener('DOMContentLoaded', init);
-
-//https://github.com/saloev/fancy-weather/blob/fancy-weather/fancy-weather/src/main.js

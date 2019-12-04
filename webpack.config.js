@@ -6,33 +6,33 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.(jpg|png|svg)$/,
-        loader: 'file-loader', 
+        loader: 'file-loader',
         options: {
-            name: './public/images/[name].[ext]'
-        }
-    }, 
+          name: './public/images/[name].[ext]',
+        },
+      },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=./public/fonts/[name].[ext]'
-    },
+        loader: 'file-loader?name=./public/fonts/[name].[ext]',
+      },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      }
-    ]
+          use: ['css-loader', 'sass-loader'],
+        }),
+      },
+    ],
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
-   
+
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
