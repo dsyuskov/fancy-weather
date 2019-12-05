@@ -1,13 +1,14 @@
 /* eslint-disable import/no-cycle */
 import Component from '../component';
-import reducerCP from '../../store/reducers/controlPanel';
+import { getState, dispatch } from '../../store/state/state';
 import { changeSearchString } from '../../store/actions/controlPanel';
 import translite from '../../utils/translite';
+import { getWeatherByCity } from '../../store/actions/weather';
 
 export default class Search extends Component {
-  constructor(state) {
+  constructor() {
     super('.search');
-    this.state = state;
+    this.state = getState();
   }
 
   render() {
@@ -31,7 +32,8 @@ export default class Search extends Component {
     const input = this.node.querySelector('.search__input');
 
     searchForm.addEventListener('submit', (event) => {
-      reducerCP(changeSearchString(input.value));
+      dispatch(changeSearchString(input.value));
+      getWeatherByCity(input.value);
       event.preventDefault();
     });
   }

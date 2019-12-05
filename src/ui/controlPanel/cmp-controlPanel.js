@@ -1,12 +1,12 @@
 /* eslint-disable import/no-cycle */
+import { getState, dispatch } from '../../store/state/state';
 import Component from '../component';
-import reducerCP from '../../store/reducers/controlPanel';
 import { changeLang, changeUseCelsius } from '../../store/actions/controlPanel';
 
 export default class ControlPanel extends Component {
-  constructor(state) {
+  constructor() {
     super('.control-panel');
-    this.state = state;
+    this.state = getState();
   }
 
   render() {
@@ -38,17 +38,18 @@ export default class ControlPanel extends Component {
     }
 
     buttonLang.addEventListener('change', () => {
-      reducerCP(changeLang(buttonLang.value));
+      dispatch(changeLang(buttonLang.value));
       localStorage.setItem('lang', buttonLang.value);
+      console.log(getState());
     });
 
     buttonFaringate.addEventListener('click', () => {
-      reducerCP(changeUseCelsius(false));
+      dispatch(changeUseCelsius(false));
       localStorage.setItem('isCelsius', false);
     });
 
     buttonCelsius.addEventListener('click', () => {
-      reducerCP(changeUseCelsius(true));
+      dispatch(changeUseCelsius(true));
       localStorage.setItem('isCelsius', true);
     });
   }

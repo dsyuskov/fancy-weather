@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line import/no-cycle
 import Search from './cmp-search';
 
 export default (state) => {
