@@ -1,7 +1,7 @@
 
 import Search from './cmp-search';
 
-export default () => {
-  const search = new Search();
+export default (state) => {
+  const search = new Search(state);
   search.render();
 };

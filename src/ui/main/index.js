@@ -1,6 +1,6 @@
 import Main from './cmp-main';
 
-export default () => {
-  const main = new Main();
-  main.init();
+export default (state) => {
+  const main = new Main(state);
+  main.render();
 };

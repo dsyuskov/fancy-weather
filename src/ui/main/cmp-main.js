@@ -1,17 +1,20 @@
+import Component from '../component';
 import WeatherDay from '../weatherDay/index';
 
-export default class Main {
-  constructor() {
-    this.node = document.querySelector('.main');
+export default class Main extends Component {
+  constructor(state) {
+    super('.main');
+    this.state = state;
   }
 
-  init() {
-    this.node.innerHTML = `
+  render() {
+    const html = `
       <div class="weather">
         <div class="weather-day"></div>
         <div class="weather-forecast"></div>
       </div>
       <div class="geoposition></div>`;
-    WeatherDay();
+    super.render(html);
+    WeatherDay(this.state);
   }
 }

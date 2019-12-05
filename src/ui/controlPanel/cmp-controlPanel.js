@@ -1,14 +1,16 @@
+/* eslint-disable import/no-cycle */
+import Component from '../component';
 import reducerCP from '../../store/reducers/controlPanel';
 import { changeLang, changeUseCelsius } from '../../store/actions/controlPanel';
-import state from '../../store/state/controlPanel';
 
-export default class ControlPanel {
-  constructor() {
-    this.node = document.querySelector('.control-panel');
+export default class ControlPanel extends Component {
+  constructor(state) {
+    super('.control-panel');
+    this.state = state;
   }
 
   render() {
-    this.node.innerHTML = `
+    const html = `
       <button class="button control-panel__update"></button>
       <select class="dropdown control-panel__lang">
         <option class="dropdown__item" value="en">en</option>
@@ -16,6 +18,7 @@ export default class ControlPanel {
       </select>
       <button class="button control-panel__faringate">&deg; F</button>
       <button class="button button--selected control-panel__celsius">&deg; C</button>`;
+    super.render(html);
     this.addEvents();
   }
 
@@ -23,7 +26,16 @@ export default class ControlPanel {
     const buttonLang = this.node.querySelector('.control-panel__lang');
     const buttonFaringate = this.node.querySelector('.control-panel__faringate');
     const buttonCelsius = this.node.querySelector('.control-panel__celsius');
-    buttonLang.value = state.lang;
+
+    buttonLang.value = this.state.controlPanel.lang;
+
+    if (this.state.controlPanel.isCelsius) {
+      buttonFaringate.classList.remove('button--selected');
+      buttonCelsius.classList.add('button--selected');
+    } else {
+      buttonFaringate.classList.add('button--selected');
+      buttonCelsius.classList.remove('button--selected');
+    }
 
     buttonLang.addEventListener('change', () => {
       reducerCP(changeLang(buttonLang.value));
@@ -32,15 +44,11 @@ export default class ControlPanel {
 
     buttonFaringate.addEventListener('click', () => {
       reducerCP(changeUseCelsius(false));
-      buttonFaringate.classList.add('button--selected');
-      buttonCelsius.classList.remove('button--selected');
       localStorage.setItem('isCelsius', false);
     });
 
     buttonCelsius.addEventListener('click', () => {
       reducerCP(changeUseCelsius(true));
-      buttonCelsius.classList.add('button--selected');
-      buttonFaringate.classList.remove('button--selected');
       localStorage.setItem('isCelsius', true);
     });
   }

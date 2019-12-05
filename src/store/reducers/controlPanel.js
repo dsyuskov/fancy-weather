@@ -1,4 +1,6 @@
-import controlPanel from '../state/controlPanel';
+/* eslint-disable import/no-cycle */
+import state from '../state/state';
+import Page from '../../ui/page/index';
 
 import {
   CHANGE_LANG,
@@ -9,18 +11,19 @@ import {
 export default function (action) {
   switch (action.type) {
     case CHANGE_LANG: {
-      controlPanel.lang = action.payload;
+      state.controlPanel.lang = action.payload;
       break;
     }
     case CHANGE_USE_CELSIUS: {
-      controlPanel.isCelsius = action.payload;
+      state.controlPanel.isCelsius = action.payload;
       break;
     }
     case CHANGE_SEARCH_STRING: {
-      controlPanel.searchString = action.payload;
+      state.controlPanel.searchString = action.payload;
       break;
     }
     default:
   }
-  console.log(controlPanel);
+  console.log(state);
+  Page(state);
 }
