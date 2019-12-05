@@ -5,19 +5,15 @@ import translite from '../../utils/translite';
 import { celsiusToFaringate /* , addSero */ } from '../../utils/utils';
 
 export default class WeatherDay extends Component {
-  constructor() {
-    super('.weather-day');
-    this.state = getState();
-  }
-
   render() {
-    const { weather, city } = this.state.weather;
-    const { lang, isCelsius } = this.state.controlPanel;
+    console.log(getState());
+    const { weather, city } = getState().weather;
+    const { lang, isCelsius } = getState().controlPanel;
     if (city) {
       const temp = isCelsius ? weather.temp : celsiusToFaringate(weather.temp);
       const feels = isCelsius ? weather.feels : celsiusToFaringate(weather.feels);
       const html = `
-      <div class="weather-day__city">${this.state.weather.city.name}, ${this.state.weather.city.country}</div>
+      <div class="weather-day__city">${city.name}, ${city.country}</div>
       <div class="weather-day__date-time">{this.state.currentDateTime}</div>
       <div class="weather-day__wrapper">
         <div class="weather-day__temp">

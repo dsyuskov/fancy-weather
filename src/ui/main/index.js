@@ -1,6 +1,7 @@
+/* eslint-disable import/no-cycle */
 import Main from './cmp-main';
 
-export default (state) => {
-  const main = new Main(state);
+export default (className) => {
+  const main = new Main(className);
   main.render();
 };

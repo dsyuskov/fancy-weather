@@ -1,12 +1,9 @@
+/* eslint-disable import/no-cycle */
 import Component from '../component';
 import WeatherDay from '../weatherDay/index';
+import WeatherForecast from '../weatherForecast/index';
 
 export default class Main extends Component {
-  constructor(state) {
-    super('.main');
-    this.state = state;
-  }
-
   render() {
     const html = `
       <div class="weather">
@@ -15,6 +12,7 @@ export default class Main extends Component {
       </div>
       <div class="geoposition></div>`;
     super.render(html);
-    WeatherDay(this.state);
+    WeatherDay('.weather-day');
+    WeatherForecast('.weather-forecast');
   }
 }

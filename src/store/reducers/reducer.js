@@ -6,20 +6,20 @@ import {
 } from '../actions/controlPanel';
 
 import {
-  // GET_WEATHER_REQUEST,
+  GET_WEATHER_REQUEST,
   GET_WEATHER_SUCCESS,
-  // GET_WEATHER_FAILTURE,
+  GET_WEATHER_ERROR,
 } from '../actions/weather';
 
-const initState = {
-  lang: localStorage.getItem('lang') ? localStorage.getItem('lang') : 'en',
-  isCelsius: localStorage.getItem('isCelsius') ? localStorage.getItem('isCelsius') : 'true',
-  searchString: '',
-};
+import {
+  GET_WEATHER_FORECAST_REQUEST,
+  GET_WEATHER_FORECAST_SUCCESS,
+  GET_WEATHER_FORECAST_ERROR,
+} from '../actions/forecast';
 
-
-export default function (state = initState, action) {
+export default function (state, action) {
   switch (action.type) {
+    /* controlPanel */
     case CHANGE_LANG: {
       return {
         ...state,
@@ -47,18 +47,42 @@ export default function (state = initState, action) {
         },
       };
     }
-    // case GET_WEATHER_REQUEST: {
-    //   // state.weather = action.payload;
-    //   break;
-    // }
-    // case GET_WEATHER_FAILTURE: {
-    //   // state.weather = action.payload;
-    //   break;
-    // }
+    /* weather */
+    case GET_WEATHER_REQUEST: {
+      return {
+        ...state,
+        isWeatherRequest: action.payload,
+      };
+    }
+    case GET_WEATHER_ERROR: {
+      return {
+        ...state,
+        isWeatherError: action.payload,
+      };
+    }
     case GET_WEATHER_SUCCESS: {
       return {
         ...state,
         weather: action.payload,
+      };
+    }
+    /* forecast */
+    case GET_WEATHER_FORECAST_REQUEST: {
+      return {
+        ...state,
+        isForecastRequest: action.payload,
+      };
+    }
+    case GET_WEATHER_FORECAST_ERROR: {
+      return {
+        ...state,
+        isForecastError: action.payload,
+      };
+    }
+    case GET_WEATHER_FORECAST_SUCCESS: {
+      return {
+        ...state,
+        forecast: action.payload,
       };
     }
     default:

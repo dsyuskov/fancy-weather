@@ -14,7 +14,7 @@ let state = {
 
 export const dispatch = (action) => {
   state = reducer(state, action);
-  Page();
+  Page('#root');
 };
 
 export const getState = () => state;

@@ -1,9 +1,10 @@
 /* eslint-disable import/no-cycle */
 import { dispatch } from '../state/state';
+import { getWeatherForecast } from './forecast';
 
 export const GET_WEATHER_REQUEST = 'GET_WEATHER_REQUEST';
 export const GET_WEATHER_SUCCESS = 'GET_WEATHER_SUCCESS';
-export const GET_WEATHER_FAILTURE = 'GET_WEATHER_FAILTURE';
+export const GET_WEATHER_ERROR = 'GET_WEATHER_ERROR';
 
 const PATH_BASE = 'https://api.openweathermap.org/data/2.5/';
 const WEATHER = 'weather';
@@ -21,31 +22,31 @@ export const getWeatherSuccess = (item) => ({
   payload: item,
 });
 
-export const getWeatherFailture = (bool) => ({
-  type: GET_WEATHER_FAILTURE,
+export const getWeatherError = (bool) => ({
+  type: GET_WEATHER_ERROR,
   payload: bool,
 });
 
 export const getWeatherByCity = (city) => {
+  dispatch(getWeatherRequest(true));
   fetch(`${PATH_BASE}${WEATHER}?${API_KEY}&${UNITS}&${PATH_SEARCH}${city}`)
     .then((response) => {
       if (!response.ok) {
-        // dispatch(getWeatherRequest(false));
+        dispatch(getWeatherRequest(false));
         throw Error(response.statusText);
       }
-      // dispatch(getWeatherRequest(false));
+      dispatch(getWeatherRequest(false));
       return response;
     })
     .then((response) => response.json())
     .then((item) => {
-      // dispatch(getWeatherForecast(item.id));
       // dispatch(getWeatherForBackground(item.weather[0].main));
-      // (getWeatherFailture(false));
+      dispatch(getWeatherError(false));
       // eslint-disable-next-line no-use-before-define
       dispatch(getWeatherSuccess(preapreWeather(item)));
-      // dispatch(getWeatherSuccess(item));
-    });
-  // .catch(() => dispatch(getWeatherFailture(true)));
+      getWeatherForecast(item.id);
+    })
+    .catch(() => dispatch(getWeatherError(true)));
 };
 
 

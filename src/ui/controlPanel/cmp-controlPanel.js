@@ -4,11 +4,6 @@ import Component from '../component';
 import { changeLang, changeUseCelsius } from '../../store/actions/controlPanel';
 
 export default class ControlPanel extends Component {
-  constructor() {
-    super('.control-panel');
-    this.state = getState();
-  }
-
   render() {
     const html = `
       <button class="button control-panel__update"></button>
@@ -23,13 +18,15 @@ export default class ControlPanel extends Component {
   }
 
   addEvents() {
+    const { lang, isCelsius } = getState().controlPanel;
+
     const buttonLang = this.node.querySelector('.control-panel__lang');
     const buttonFaringate = this.node.querySelector('.control-panel__faringate');
     const buttonCelsius = this.node.querySelector('.control-panel__celsius');
 
-    buttonLang.value = this.state.controlPanel.lang;
+    buttonLang.value = lang;
 
-    if (this.state.controlPanel.isCelsius) {
+    if (isCelsius) {
       buttonFaringate.classList.remove('button--selected');
       buttonCelsius.classList.add('button--selected');
     } else {
@@ -40,7 +37,6 @@ export default class ControlPanel extends Component {
     buttonLang.addEventListener('change', () => {
       dispatch(changeLang(buttonLang.value));
       localStorage.setItem('lang', buttonLang.value);
-      console.log(getState());
     });
 
     buttonFaringate.addEventListener('click', () => {
