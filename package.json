@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/dsyuskov/fancy-weather#readme",
   "dependencies": {
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "mapbox-gl": "^1.6.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.5",

@@ -2,6 +2,7 @@
 import Component from '../component';
 import WeatherDay from '../weatherDay/index';
 import WeatherForecast from '../weatherForecast/index';
+import Geoposition from '../geoposition/index';
 
 export default class Main extends Component {
   render() {
@@ -10,9 +11,10 @@ export default class Main extends Component {
         <div class="weather-day"></div>
         <div class="weather-forecast"></div>
       </div>
-      <div class="geoposition></div>`;
+      <div class="geoposition"></div>`;
     super.render(html);
     WeatherDay('.weather-day');
     WeatherForecast('.weather-forecast');
+    Geoposition('.geoposition');
   }
 }
