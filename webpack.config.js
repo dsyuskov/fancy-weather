@@ -1,6 +1,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -14,12 +15,12 @@ module.exports = {
         test: /\.(jpg|png|svg)$/,
         loader: 'file-loader',
         options: {
-          name: './public/images/[name].[ext]',
+          name: './images/[name].[ext]',
         },
       },
       {
         test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=./public/fonts/[name].[ext]',
+        loader: 'file-loader?name=./fonts/[name].[ext]',
       },
       {
         test: /\.scss$/,
@@ -32,6 +33,10 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('style.css'),
+
+    new CopyWebpackPlugin([
+      { from: 'src/assets', to: '' },
+    ]),
 
     new HtmlWebpackPlugin({
       template: './public/index.html',
