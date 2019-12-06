@@ -1,35 +1,27 @@
 /* eslint-disable import/no-cycle */
 import Component from '../component';
-// import { getState } from '../../store/state/state';
-// import translite from '../../utils/translite';
-// import { celsiusToFaringate /* , addSero */ } from '../../utils/utils';
+import { getState } from '../../store/state/state';
+import translite from '../../utils/translite';
+import { celsiusToFaringate } from '../../utils/utils';
 
 export default class WeatherForecast extends Component {
   render() {
-    // const { lang, forecast, isCelsius } = props;
-    // const temp = isCelsius ? forecast.temp : celsiusToFaringate(forecast.temp);
-    const html = `
-      <div className="weather-forecast__day">
-        <div className="weather-forecast__weekday">{ translite(lang, 'fullDayName', forecast.weekDay) }</div>
-        <div className="weather-forecast__temp">{ temp }&deg;</div>
+    const { lang, isCelsius } = getState().controlPanel;
+    const { forecast } = getState();
+    let html = '';
+
+    if (forecast !== '') {
+      forecast.forEach((forecastDay) => {
+        const temp = isCelsius ? forecastDay.temp : celsiusToFaringate(forecastDay.temp);
+        html += `<div className="weather-forecast__day">
+        <div className="weather-forecast__weekday">${translite(lang, 'fullDayName', forecastDay.weekDay)}</div>
+        <div className="weather-forecast__temp">${temp}&deg;</div>
         <div className="weather-forecast__img">
-          <img src="" alt="">
-        </div>
-      </div>
-      <div className="weather-forecast__day">
-        <div className="weather-forecast__weekday">{ translite(lang, 'fullDayName', forecast.weekDay) }</div>
-        <div className="weather-forecast__temp">{ temp }&deg;</div>
-        <div className="weather-forecast__img">
-          <img src="" alt="">
-        </div>
-      </div>
-      <div className="weather-forecast__day">
-        <div className="weather-forecast__weekday">{ translite(lang, 'fullDayName', forecast.weekDay) }</div>
-        <div className="weather-forecast__temp">{ temp }&deg;</div>
-        <div className="weather-forecast__img">
-          <img src="" alt="">
+          <img src="./images/${forecastDay.icon}.png" alt="">
         </div>
       </div>`;
+      });
+    }
     super.render(html);
   }
 }
